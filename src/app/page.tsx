@@ -1,3 +1,4 @@
+import { ticketsPath } from "@/paths";
 import Link from "next/link";
 
 const HomePage = () => {
@@ -5,7 +6,7 @@ const HomePage = () => {
     <div>
       <h2 className="text-lg">HomePage</h2>
 
-      <Link href="/tickets" className="underline">
+      <Link href={ticketsPath()} className="text-sm underline">
         Go to Tickets
       </Link>
     </div>
