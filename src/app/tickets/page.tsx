@@ -1,6 +1,7 @@
 import { initialTickets } from "@/data";
 import { ticketPath } from "@/paths";
 import Link from "next/link";
+import { twJoin } from "tailwind-merge";
 
 const TICKET_ICONS = {
   OPEN: "O",
@@ -26,7 +27,14 @@ const TicketsPage = () => {
           >
             <div>{TICKET_ICONS[ticket.status]}</div>
             <h3 className="text-lg font-semibold truncate">{ticket.title}</h3>
-            <p className="text-sm text-slate-500 truncate">{ticket.content}</p>
+            <p
+              className={twJoin(
+                "text-sm text-slate-500 truncate",
+                ticket.status === "DONE" && "line-through",
+              )}
+            >
+              {ticket.content}
+            </p>
             <Link href={ticketPath(ticket.id)} className="text-sm underline">
               View
             </Link>
