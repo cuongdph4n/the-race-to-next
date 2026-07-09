@@ -1,5 +1,4 @@
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { homePath, ticketsPath } from "@/paths";
 import { LucideKanban } from "lucide-react";
 import type { Metadata } from "next";
@@ -53,7 +52,7 @@ export default function RootLayout({
           <div>
             <Link
               href={ticketsPath()}
-              className={cn(buttonVariants({ variant: "outline" }))}
+              className={buttonVariants({ variant: "default" })}
             >
               Tickets
             </Link>
