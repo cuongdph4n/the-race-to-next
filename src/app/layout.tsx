@@ -1,3 +1,5 @@
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { homePath, ticketsPath } from "@/paths";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -39,12 +41,18 @@ export default function RootLayout({
         "
         >
           <div>
-            <Link href={homePath()} className="text-lg font-bold">
+            <Link
+              href={homePath()}
+              className={cn(buttonVariants({ variant: "outline" }))}
+            >
               Home
             </Link>
           </div>
           <div>
-            <Link href={ticketsPath()} className="text-sm underline">
+            <Link
+              href={ticketsPath()}
+              className={cn(buttonVariants({ variant: "outline" }))}
+            >
               Tickets
             </Link>
           </div>
