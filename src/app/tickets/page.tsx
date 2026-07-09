@@ -1,7 +1,7 @@
 import { initialTickets } from "@/data";
+import { cn } from "@/lib/utils";
 import { ticketPath } from "@/paths";
 import Link from "next/link";
-import { twJoin } from "tailwind-merge";
 
 const CheckIcon = () => (
   <svg
@@ -79,10 +79,9 @@ const TicketsPage = () => {
             <div>{TICKET_ICONS[ticket.status]}</div>
             <h3 className="text-lg font-semibold truncate">{ticket.title}</h3>
             <p
-              className={twJoin(
-                "text-sm text-slate-500 truncate",
-                ticket.status === "DONE" && "line-through",
-              )}
+              className={cn("text-sm text-slate-500 truncate", {
+                "line-through": ticket.status === "DONE",
+              })}
             >
               {ticket.content}
             </p>
