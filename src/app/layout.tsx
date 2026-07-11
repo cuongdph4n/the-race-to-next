@@ -1,4 +1,5 @@
 import { Header } from "@/components/header";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -26,21 +27,24 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body>
-        <Header />
-        <main
-          className="
-            min-h-screen flex-1
-            overflow-y-auto overflow-x-hidden
-            py-24 px-8
-            bg-secondary/20
-            flex flex-col
-          "
-        >
-          {children}
-        </main>
+        <ThemeProvider>
+          <Header />
+          <main
+            className="
+              min-h-screen flex-1
+              overflow-y-auto overflow-x-hidden
+              py-24 px-8
+              bg-secondary/20
+              flex flex-col
+            "
+          >
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );
