@@ -1,11 +1,11 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Ticket } from "@/generated/prisma/client";
 import { cn } from "@/lib/utils";
 import { ticketPath } from "@/paths";
 import { LucideArrowUpRightFromSquare } from "lucide-react";
 import Link from "next/link";
 import { TICKET_ICONS } from "../constants";
-import { Ticket } from "../types";
 
 type TicketItemProps = {
   ticket: Ticket;
@@ -25,8 +25,8 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
   return (
     <div
       className={cn("w-full flex gap-x-1", {
-        "max-w-[580px]": isDetail,
-        "max-w-[420px]": !isDetail,
+        "max-w-145": isDetail,
+        "max-w-105": !isDetail,
       })}
     >
       <Card className="w-full">
