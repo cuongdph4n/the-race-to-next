@@ -16,6 +16,7 @@ type TicketItemProps = {
 const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
   const detailButton = (
     <Link
+      prefetch
       href={ticketPath(ticket.id)}
       className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
     >
