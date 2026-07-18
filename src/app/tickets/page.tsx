@@ -1,8 +1,8 @@
 import { CardCompact } from "@/components/card-compact";
 import { Heading } from "@/components/heading";
 import { Spinner } from "@/components/spinner";
-import { TicketCreateForm } from "@/features/ticket/components/ticket-create-form";
 import { TicketList } from "@/features/ticket/components/ticket-list";
+import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
 import { Suspense } from "react";
 import ErrorBoundary from "../custom-error-boundary";
 
@@ -15,7 +15,7 @@ const TicketsPage = async () => {
         title="Create Ticket"
         description="A new ticket will be created"
         className="w-full max-w-105 self-center"
-        content={<TicketCreateForm />}
+        content={<TicketUpsertForm />}
       />
 
       <ErrorBoundary title="Something went wrong">
