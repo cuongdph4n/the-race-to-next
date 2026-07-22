@@ -21,7 +21,6 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
     EMPTY_ACTION_STATE,
   );
 
-  console.log("actionState", actionState, ticket);
   return (
     <Form action={action} actionState={actionState}>
       <FieldGroup>
