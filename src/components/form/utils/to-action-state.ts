@@ -1,9 +1,14 @@
 import * as z from "zod";
 
+type FormValues = {
+  title: string;
+  content: string;
+};
+
 export type ActionState = {
   status?: "SUCCESS" | "ERROR";
   message: string;
-  payload?: FormData;
+  payload?: FormValues;
   fieldErrors: Record<string, string[] | undefined>;
   timestamp: number;
 };
@@ -12,19 +17,22 @@ export const EMPTY_ACTION_STATE: ActionState = {
   message: "",
   fieldErrors: {},
   timestamp: Date.now(),
+  payload: {
+    title: "",
+    content: "",
+  },
 };
 
 export const fromErrorToActionState = (
   error: unknown,
-  formData?: FormData,
+  values: FormValues,
 ): ActionState => {
   if (error instanceof z.ZodError) {
     // if validation error with Zod, return first error message
-    console.log("error", error);
     return {
       status: "ERROR",
       message: "",
-      payload: formData,
+      payload: values,
       fieldErrors: z.flattenError(error).fieldErrors,
       timestamp: Date.now(),
     };
@@ -34,7 +42,7 @@ export const fromErrorToActionState = (
     return {
       status: "ERROR",
       message: error.message,
-      payload: formData,
+      payload: values,
       fieldErrors: {},
       timestamp: Date.now(),
     };
@@ -44,7 +52,7 @@ export const fromErrorToActionState = (
     return {
       status: "ERROR",
       message: "An unknown error occurred",
-      payload: formData,
+      payload: values,
       fieldErrors: {},
       timestamp: Date.now(),
     };

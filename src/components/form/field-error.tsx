@@ -1,3 +1,4 @@
+import { FieldError as ShadcnFieldError } from "@/components/ui/field";
 import { ActionState } from "./utils/to-action-state";
 
 type FieldErrorProps = {
@@ -10,7 +11,7 @@ const FieldError = ({ actionState, name }: FieldErrorProps) => {
 
   if (!message) return null;
 
-  return <span className="text-xs text-red-500">{message}</span>;
+  return <ShadcnFieldError className="text-xs">{message}</ShadcnFieldError>;
 };
 
 export { FieldError };

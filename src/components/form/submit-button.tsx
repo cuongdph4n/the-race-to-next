@@ -1,14 +1,12 @@
 import { LucideLoaderCircle } from "lucide-react";
-import { useFormStatus } from "react-dom";
 import { Button } from "../ui/button";
 
 type SubmitButtonProps = {
   label: string;
+  pending: boolean;
 };
 
-const SubmitButton = ({ label }: SubmitButtonProps) => {
-  const { pending } = useFormStatus();
-
+const SubmitButton = ({ label, pending }: SubmitButtonProps) => {
   return (
     <Button disabled={pending} type="submit">
       {pending && <LucideLoaderCircle className="h-4 w-4 animate-spin" />}

@@ -1,3 +1,4 @@
+import NextForm from "next/form";
 import { toast } from "sonner";
 import { useActionFeedback } from "./hooks/use-action-feedback";
 import { ActionState } from "./utils/to-action-state";
@@ -23,9 +24,9 @@ const Form = ({ action, actionState, children }: FormProps) => {
   });
 
   return (
-    <form action={action} className="flex flex-col gap-y-2">
+    <NextForm action={action} className="flex flex-col gap-y-2">
       {children}
-    </form>
+    </NextForm>
   );
 };
 

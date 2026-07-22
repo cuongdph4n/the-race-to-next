@@ -12,8 +12,14 @@ import { redirect } from "next/navigation";
 import * as z from "zod";
 
 const upsertTicketSchema = z.object({
-  title: z.string().min(1).max(191),
-  content: z.string().min(1).max(1024),
+  title: z
+    .string()
+    .min(1, "Ticket title must be at least 1 characters.")
+    .max(191, "Ticket title cannot exceed 191 characters"),
+  content: z
+    .string()
+    .min(1, "Content must be at least 1 characters.")
+    .max(1024, "Content cannot exceed 1024 characters"),
 });
 
 export const upsertTicket = async (
@@ -21,11 +27,13 @@ export const upsertTicket = async (
   _actionState: ActionState,
   formData: FormData,
 ) => {
+  const values = {
+    title: formData.get("title") as string,
+    content: formData.get("content") as string,
+  };
+
   try {
-    const data = upsertTicketSchema.parse({
-      title: formData.get("title"),
-      content: formData.get("content"),
-    });
+    const data = upsertTicketSchema.parse(values);
 
     await prisma.ticket.upsert({
       where: {
@@ -35,7 +43,7 @@ export const upsertTicket = async (
       create: data,
     });
   } catch (error) {
-    return fromErrorToActionState(error, formData);
+    return fromErrorToActionState(error, values);
   }
 
   revalidatePath(ticketsPath());
