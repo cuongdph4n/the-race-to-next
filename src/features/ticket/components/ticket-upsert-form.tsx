@@ -2,10 +2,10 @@
 
 import { FieldError } from "@/components/form/field-error";
 import { Form } from "@/components/form/form";
+import { Input } from "@/components/form/input";
 import { SubmitButton } from "@/components/form/submit-button";
 import { EMPTY_ACTION_STATE } from "@/components/form/utils/to-action-state";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Ticket } from "@/generated/prisma/client";
 import { useActionState } from "react";
@@ -34,7 +34,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
             name="title"
             type="text"
             defaultValue={
-              ticket?.id ? ticket?.title : actionState.payload?.title
+              (actionState.payload?.get("title") as string) ?? ticket?.title
             }
             aria-invalid={!!actionState.fieldErrors?.title?.length}
             disabled={pending}
@@ -50,7 +50,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
             id="content"
             name="content"
             defaultValue={
-              ticket?.id ? ticket?.content : actionState.payload?.content
+              (actionState.payload?.get("content") as string) ?? ticket?.content
             }
             aria-invalid={!!actionState.fieldErrors?.content?.length}
             disabled={pending}

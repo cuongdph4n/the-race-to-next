@@ -27,13 +27,11 @@ export const upsertTicket = async (
   _actionState: ActionState,
   formData: FormData,
 ) => {
-  const values = {
-    title: formData.get("title") as string,
-    content: formData.get("content") as string,
-  };
-
   try {
-    const data = upsertTicketSchema.parse(values);
+    const data = upsertTicketSchema.parse({
+      title: formData.get("title"),
+      content: formData.get("content"),
+    });
 
     await prisma.ticket.upsert({
       where: {
@@ -43,7 +41,7 @@ export const upsertTicket = async (
       create: data,
     });
   } catch (error) {
-    return fromErrorToActionState(error, values);
+    return fromErrorToActionState(error, formData);
   }
 
   revalidatePath(ticketsPath());
