@@ -41,6 +41,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
           />
           <FieldError actionState={actionState} name="title" />
         </Field>
+
         <Field
           data-invalid={!!actionState.fieldErrors?.content?.length}
           data-disabled={pending}
@@ -57,6 +58,45 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
           />
           <FieldError actionState={actionState} name="content" />
         </Field>
+
+        <div className="grid grid-cols-2 gap-x-4">
+          <Field
+            data-invalid={!!actionState.fieldErrors?.deadline?.length}
+            data-disabled={pending}
+          >
+            <FieldLabel htmlFor="deadline">Deadline</FieldLabel>
+            <Input
+              id="deadline"
+              name="deadline"
+              type="date"
+              defaultValue={
+                (actionState.payload?.get("deadline") as string) ??
+                ticket?.deadline
+              }
+              aria-invalid={!!actionState.fieldErrors?.deadline?.length}
+              disabled={pending}
+            />
+            <FieldError actionState={actionState} name="deadline" />
+          </Field>
+          <Field
+            data-invalid={!!actionState.fieldErrors?.bounty?.length}
+            data-disabled={pending}
+          >
+            <FieldLabel htmlFor="bounty">Bounty ($)</FieldLabel>
+            <Input
+              id="bounty"
+              name="bounty"
+              type="number"
+              step=".01"
+              defaultValue={
+                (actionState.payload?.get("bounty") as string) ?? ticket?.bounty
+              }
+              aria-invalid={!!actionState.fieldErrors?.bounty?.length}
+              disabled={pending}
+            />
+            <FieldError actionState={actionState} name="bounty" />
+          </Field>
+        </div>
       </FieldGroup>
 
       <SubmitButton label={ticket ? "Edit" : "Create"} pending={pending} />
