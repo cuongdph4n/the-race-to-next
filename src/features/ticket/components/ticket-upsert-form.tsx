@@ -8,6 +8,7 @@ import { EMPTY_ACTION_STATE } from "@/components/form/utils/to-action-state";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
 import { Ticket } from "@/generated/prisma/client";
+import { fromCent } from "@/utils/currency";
 import { useActionState } from "react";
 import { upsertTicket } from "../actions/upsert-ticket";
 
@@ -89,7 +90,8 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
               type="number"
               step=".01"
               defaultValue={
-                (actionState.payload?.get("bounty") as string) ?? ticket?.bounty
+                (actionState.payload?.get("bounty") as string) ??
+                (ticket?.bounty ? fromCent(ticket?.bounty) : "")
               }
               aria-invalid={!!actionState.fieldErrors?.bounty?.length}
               disabled={pending}
