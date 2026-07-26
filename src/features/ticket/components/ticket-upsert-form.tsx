@@ -1,5 +1,6 @@
 "use client";
 
+import { DatePicker } from "@/components/date-picker";
 import { FieldError } from "@/components/form/field-error";
 import { Form } from "@/components/form/form";
 import { Input } from "@/components/form/input";
@@ -66,16 +67,13 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
             data-disabled={pending}
           >
             <FieldLabel htmlFor="deadline">Deadline</FieldLabel>
-            <Input
+            <DatePicker
               id="deadline"
               name="deadline"
-              type="date"
               defaultValue={
                 (actionState.payload?.get("deadline") as string) ??
                 ticket?.deadline
               }
-              aria-invalid={!!actionState.fieldErrors?.deadline?.length}
-              disabled={pending}
             />
             <FieldError actionState={actionState} name="deadline" />
           </Field>
