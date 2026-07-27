@@ -1,6 +1,9 @@
 "use client";
 
-import { DatePicker } from "@/components/date-picker";
+import {
+  DatePicker,
+  ImperativeHandleFromDatePicker,
+} from "@/components/date-picker";
 import { FieldError } from "@/components/form/field-error";
 import { Form } from "@/components/form/form";
 import { Input } from "@/components/form/input";
@@ -10,7 +13,7 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
 import { Ticket } from "@/generated/prisma/client";
 import { fromCent } from "@/utils/currency";
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import { upsertTicket } from "../actions/upsert-ticket";
 
 type TicketUpsertFormProps = {
@@ -23,8 +26,11 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
     EMPTY_ACTION_STATE,
   );
 
+  const datePickerImperativeHandleRef =
+    useRef<ImperativeHandleFromDatePicker>(null);
+
   const handleSuccess = () => {
-    console.log("Success Handler");
+    datePickerImperativeHandleRef.current?.reset();
   };
 
   return (
@@ -82,6 +88,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
             />
             <FieldError actionState={actionState} name="deadline" />
           </Field>
+
           <Field
             data-invalid={!!actionState.fieldErrors?.bounty?.length}
             data-disabled={pending}
