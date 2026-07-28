@@ -9,9 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { toast } from "@/components/ui/toast";
 import { Ticket, TicketStatus } from "@/generated/prisma/client";
 import { LucideTrash } from "lucide-react";
-import { toast } from "sonner";
 import { updateTicketStatus } from "../actions/update-ticket-status";
 import { TICKET_STATUS_LABELS } from "../constants";
 
@@ -29,13 +29,13 @@ const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
   );
 
   const handleUpdateTicketStatus = async (value: string) => {
-    const result = await updateTicketStatus(ticket.id, value as TicketStatus);
+    const promise = updateTicketStatus(ticket.id, value as TicketStatus);
 
-    if (result.status === "ERROR") {
-      toast.error(result.message);
-    } else if (result.status === "SUCCESS") {
-      toast.success(result.message);
-    }
+    toast.promise(promise, {
+      loading: "Updating status...",
+      success: (result) => `${result.message}`,
+      error: (result) => `${result.message}`,
+    });
   };
 
   const ticketStatusRadioGroupItems = (

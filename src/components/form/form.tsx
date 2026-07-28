@@ -1,5 +1,5 @@
 import NextForm from "next/form";
-import { toast } from "sonner";
+import { toast } from "../ui/toast";
 import { useActionFeedback } from "./hooks/use-action-feedback";
 import { ActionState } from "./utils/to-action-state";
 
@@ -21,14 +21,20 @@ const Form = ({
   useActionFeedback(actionState, {
     onSuccess: ({ actionState }) => {
       if (actionState.message) {
-        toast.success(actionState.message);
+        toast.add({
+          type: "success",
+          description: actionState.message,
+        });
       }
 
       onSuccess?.(actionState);
     },
     onError: ({ actionState }) => {
       if (actionState.message) {
-        toast.error(actionState.message);
+        toast.add({
+          type: "error",
+          description: actionState.message,
+        });
       }
 
       onError?.(actionState);
