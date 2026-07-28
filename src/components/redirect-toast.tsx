@@ -1,10 +1,13 @@
 "use client";
 
 import { consumeCookieByKey } from "@/actions/cookies";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "./ui/toast";
 
 const RedirectToast = () => {
+  const pathName = usePathname();
+
   useEffect(() => {
     const showCookieToast = async () => {
       const message = await consumeCookieByKey("toast");
@@ -18,7 +21,7 @@ const RedirectToast = () => {
     };
 
     showCookieToast();
-  }, []);
+  }, [pathName]);
 
   return null;
 };

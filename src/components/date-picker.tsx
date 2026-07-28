@@ -50,7 +50,7 @@ const DatePicker = ({
         id={id}
         render={
           <Button
-            variant={disabled ? "secondary" : "outline"}
+            variant={"outline"}
             data-empty={!date}
             className="justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
           />
