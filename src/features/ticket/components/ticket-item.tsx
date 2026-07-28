@@ -1,4 +1,5 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/confirm-dialog";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -48,11 +49,16 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
   );
 
   const deleteButton = (
-    <form action={deleteTicket.bind(null, ticket.id)}>
-      <Button variant="outline" size="icon" type="submit">
-        <LucideTrash className="h-4 w-4" />
-      </Button>
-    </form>
+    <ConfirmDialog
+      action={deleteTicket.bind(null, ticket.id)}
+      trigger={
+        <button
+          className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
+        >
+          <LucideTrash className="h-4 w-4" />
+        </button>
+      }
+    />
   );
 
   const moreMenu = (

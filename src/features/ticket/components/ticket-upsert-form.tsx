@@ -85,6 +85,8 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
                 (actionState.payload?.get("deadline") as string) ??
                 ticket?.deadline
               }
+              ariaInvalid={!!actionState.fieldErrors?.deadline?.length}
+              disabled={pending}
             />
             <FieldError actionState={actionState} name="deadline" />
           </Field>

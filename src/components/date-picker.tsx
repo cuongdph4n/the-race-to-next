@@ -16,6 +16,8 @@ type DatePickerProps = {
   name: string;
   defaultValue?: string | undefined;
   imperativeHandleRef?: React.RefObject<ImperativeHandleFromDatePicker>;
+  ariaInvalid?: boolean;
+  disabled?: boolean;
 };
 
 const DatePicker = ({
@@ -23,6 +25,8 @@ const DatePicker = ({
   name,
   defaultValue,
   imperativeHandleRef,
+  ariaInvalid = false,
+  disabled = false,
 }: DatePickerProps) => {
   const [date, setDate] = useState<Date | undefined>(
     defaultValue ? new Date(defaultValue) : new Date(),
@@ -46,11 +50,13 @@ const DatePicker = ({
         id={id}
         render={
           <Button
-            variant="outline"
+            variant={disabled ? "secondary" : "outline"}
             data-empty={!date}
             className="justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
           />
         }
+        aria-invalid={ariaInvalid}
+        disabled={disabled}
       >
         <LucideCalendar />
         {formattedStringDate}
