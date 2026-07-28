@@ -1,4 +1,3 @@
-import { ConfirmDialog } from "@/components/confirm-dialog";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -15,10 +14,8 @@ import {
   LucideArrowUpRightFromSquare,
   LucideMoreVertical,
   LucidePencil,
-  LucideTrash,
 } from "lucide-react";
 import Link from "next/link";
-import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
 import { TicketMoreMenu } from "./ticket-more-menu";
 
@@ -46,19 +43,6 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     >
       <LucidePencil className="h-4 w-4" />
     </Link>
-  );
-
-  const deleteButton = (
-    <ConfirmDialog
-      action={deleteTicket.bind(null, ticket.id)}
-      trigger={
-        <button
-          className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
-        >
-          <LucideTrash className="h-4 w-4" />
-        </button>
-      }
-    />
   );
 
   const moreMenu = (
@@ -109,7 +93,6 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         {isDetail ? (
           <>
             {editButton}
-            {deleteButton}
             {moreMenu}
           </>
         ) : (
