@@ -1,10 +1,34 @@
-import { homePath, ticketsPath } from "@/paths";
+import { cn } from "@/lib/utils";
+import { homePath, signInPath, signUpPath, ticketsPath } from "@/paths";
 import { LucideKanban } from "lucide-react";
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme/theme-switcher";
 import { buttonVariants } from "./ui/button";
 
 const Header = () => {
+  const navItems = (
+    <>
+      <Link
+        href={ticketsPath()}
+        className={buttonVariants({ variant: "default" })}
+      >
+        Tickets
+      </Link>
+      <Link
+        href={signUpPath()}
+        className={cn(buttonVariants({ variant: "outline" }))}
+      >
+        Sign Up
+      </Link>
+      <Link
+        href={signInPath()}
+        className={cn(buttonVariants({ variant: "outline" }))}
+      >
+        Sign In
+      </Link>
+    </>
+  );
+
   return (
     <nav
       className="
@@ -25,12 +49,7 @@ const Header = () => {
       </div>
       <div className="flex align-items gap-x-2">
         <ThemeSwitcher />
-        <Link
-          href={ticketsPath()}
-          className={buttonVariants({ variant: "default" })}
-        >
-          Tickets
-        </Link>
+        {navItems}
       </div>
     </nav>
   );
