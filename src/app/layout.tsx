@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/toast";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import * as z from "zod";
+import { en } from "zod/locales";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,6 +22,8 @@ export const metadata: Metadata = {
   title: "The Race to Next",
   description: "My Road to Next application ...",
 };
+
+z.config(en());
 
 export default function RootLayout({
   children,

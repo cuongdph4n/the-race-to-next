@@ -14,16 +14,10 @@ import { redirect } from "next/navigation";
 import * as z from "zod";
 
 const upsertTicketSchema = z.object({
-  title: z
-    .string()
-    .min(1, "Ticket title must be at least 1 characters.")
-    .max(191, "Ticket title cannot exceed 191 characters"),
-  content: z
-    .string()
-    .min(1, "Content must be at least 1 characters.")
-    .max(1024, "Content cannot exceed 1024 characters"),
+  title: z.string().min(1).max(191),
+  content: z.string().min(1).max(1024),
   deadline: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Is required"),
-  bounty: z.coerce.number().positive("Please enter a valid currency amount"),
+  bounty: z.coerce.number().positive(),
 });
 
 export const upsertTicket = async (

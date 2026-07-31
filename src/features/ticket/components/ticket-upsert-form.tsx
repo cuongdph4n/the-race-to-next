@@ -35,7 +35,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
 
   return (
     <Form action={action} actionState={actionState} onSuccess={handleSuccess}>
-      <FieldGroup>
+      <FieldGroup className="gap-y-2">
         <Field
           data-invalid={!!actionState.fieldErrors?.title?.length}
           data-disabled={pending}
