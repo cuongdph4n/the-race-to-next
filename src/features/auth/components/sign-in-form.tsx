@@ -7,32 +7,17 @@ import { SubmitButton } from "@/components/form/submit-button";
 import { EMPTY_ACTION_STATE } from "@/components/form/utils/to-action-state";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { useActionState } from "react";
-import { signUp } from "../actions/sign-up";
+import { signIn } from "../actions/sign-in";
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const [actionState, action, pending] = useActionState(
-    signUp,
+    signIn,
     EMPTY_ACTION_STATE,
   );
 
   return (
     <Form action={action} actionState={actionState}>
       <FieldGroup className="gap-y-2">
-        <Field
-          data-invalid={!!actionState.fieldErrors?.name?.length}
-          data-disabled={pending}
-        >
-          <Input
-            type="text"
-            name="name"
-            placeholder="Name"
-            defaultValue={actionState.payload?.get("name") as string}
-            aria-invalid={!!actionState.fieldErrors?.name?.length}
-            disabled={pending}
-          />
-          <FieldError actionState={actionState} name="name" />
-        </Field>
-
         <Field
           data-invalid={!!actionState.fieldErrors?.email?.length}
           data-disabled={pending}
@@ -62,26 +47,11 @@ const SignUpForm = () => {
           />
           <FieldError actionState={actionState} name="password" />
         </Field>
-
-        <Field
-          data-invalid={!!actionState.fieldErrors?.confirmPassword?.length}
-          data-disabled={pending}
-        >
-          <Input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            defaultValue={actionState.payload?.get("confirmPassword") as string}
-            aria-invalid={!!actionState.fieldErrors?.confirmPassword?.length}
-            disabled={pending}
-          />
-          <FieldError actionState={actionState} name="confirmPassword" />
-        </Field>
       </FieldGroup>
 
-      <SubmitButton label="Sign Up" pending={pending} />
+      <SubmitButton label="Sign In" pending={pending} />
     </Form>
   );
 };
 
-export { SignUpForm };
+export { SignInForm };

@@ -2,12 +2,24 @@
 CREATE TYPE "TicketStatus" AS ENUM ('OPEN', 'IN_PROGRESS', 'DONE');
 
 -- CreateTable
+CREATE TABLE "Ticket" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "title" TEXT NOT NULL,
+    "content" VARCHAR(1024) NOT NULL,
+    "status" "TicketStatus" NOT NULL DEFAULT 'OPEN',
+    "deadline" TEXT NOT NULL,
+    "bounty" INTEGER NOT NULL,
+
+    CONSTRAINT "Ticket_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
-    "username" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "passwordHash" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "emailVerified" BOOLEAN NOT NULL DEFAULT false,
     "image" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -20,28 +32,14 @@ CREATE TABLE "user" (
 CREATE TABLE "session" (
     "id" TEXT NOT NULL,
     "expiresAt" TIMESTAMP(3) NOT NULL,
-    "userId" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "ipAddress" TEXT,
     "userAgent" TEXT,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "session_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Ticket" (
-    "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "title" TEXT NOT NULL,
-    "content" VARCHAR(1024) NOT NULL,
-    "status" "TicketStatus" NOT NULL DEFAULT 'OPEN',
-    "deadline" TEXT NOT NULL,
-    "bounty" INTEGER NOT NULL,
-
-    CONSTRAINT "Ticket_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -74,9 +72,6 @@ CREATE TABLE "verification" (
 
     CONSTRAINT "verification_pkey" PRIMARY KEY ("id")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "user_username_key" ON "user"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");

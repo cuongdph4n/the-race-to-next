@@ -3,20 +3,19 @@
 import {
   ActionState,
   fromErrorToActionState,
-  toActionState,
 } from "@/components/form/utils/to-action-state";
+import { auth } from "@/lib/auth";
+import { ticketsPath } from "@/paths";
+import { redirect } from "next/navigation";
 import * as z from "zod";
 
 const signUpSchema = z
   .object({
-    username: z
+    name: z
       .string()
       .min(1)
       .max(191)
-      .refine(
-        (value) => !value.includes(" "),
-        "Username cannot contain spaces",
-      ),
+      .refine((value) => !value.includes(" "), "Name cannot contain spaces"),
     email: z.string().min(1, { message: "Is required" }).max(191).email(),
     password: z.string().min(6).max(191),
     confirmPassword: z.string().min(6).max(191),
@@ -33,12 +32,20 @@ const signUpSchema = z
 
 export const signUp = async (_actionState: ActionState, formData: FormData) => {
   try {
-    const { username, email, password } = signUpSchema.parse(
+    const { name, email, password } = signUpSchema.parse(
       Object.fromEntries(formData),
     );
+
+    await auth.api.signUpEmail({
+      body: {
+        name,
+        email,
+        password,
+      },
+    });
   } catch (error) {
-    return fromErrorToActionState(error);
+    return fromErrorToActionState(error, formData);
   }
 
-  return toActionState("SUCCESS", "Sign up successful");
+  redirect(ticketsPath());
 };
