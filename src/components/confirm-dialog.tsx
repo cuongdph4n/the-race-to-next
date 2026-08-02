@@ -17,7 +17,7 @@ type UseConfirmDialogProps = {
   title?: string;
   description?: string;
   action: () => Promise<ActionState>;
-  trigger: React.JSX.Element;
+  trigger: React.ReactElement<React.ComponentPropsWithoutRef<"button">>;
 };
 
 const useConfirmDialog = ({
