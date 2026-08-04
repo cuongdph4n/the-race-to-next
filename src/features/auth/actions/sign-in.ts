@@ -3,10 +3,9 @@
 import {
   ActionState,
   fromErrorToActionState,
+  toActionState,
 } from "@/components/form/utils/to-action-state";
 import { auth } from "@/lib/auth";
-import { ticketsPath } from "@/paths";
-import { redirect } from "next/navigation";
 import z from "zod";
 
 const signInSchema = z.object({
@@ -30,5 +29,5 @@ export const signIn = async (_actionState: ActionState, formData: FormData) => {
     return fromErrorToActionState(error, formData);
   }
 
-  redirect(ticketsPath());
+  return toActionState("SUCCESS", "Signed in successfully");
 };

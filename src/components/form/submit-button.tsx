@@ -1,11 +1,13 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { LucideLoaderCircle } from "lucide-react";
 import { cloneElement } from "react";
+import { useFormStatus } from "react-dom";
 import { Button } from "../ui/button";
 
 type SubmitButtonProps = {
   label: string;
-  pending: boolean;
   icon?: React.ReactElement<React.ComponentPropsWithoutRef<"svg">>;
   variant?:
     | "default"
@@ -25,13 +27,9 @@ type SubmitButtonProps = {
     | "icon-lg";
 };
 
-const SubmitButton = ({
-  label,
-  pending,
-  icon,
-  variant,
-  size,
-}: SubmitButtonProps) => {
+const SubmitButton = ({ label, icon, variant, size }: SubmitButtonProps) => {
+  const { pending } = useFormStatus();
+
   return (
     <Button disabled={pending} type="submit" variant={variant} size={size}>
       {pending && (

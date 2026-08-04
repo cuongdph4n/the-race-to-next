@@ -6,6 +6,9 @@ import { Input } from "@/components/form/input";
 import { SubmitButton } from "@/components/form/submit-button";
 import { EMPTY_ACTION_STATE } from "@/components/form/utils/to-action-state";
 import { Field, FieldGroup } from "@/components/ui/field";
+import { useSession } from "@/lib/auth-client";
+import { ticketsPath } from "@/paths";
+import { redirect } from "next/navigation";
 import { useActionState } from "react";
 import { signIn } from "../actions/sign-in";
 
@@ -15,8 +18,15 @@ const SignInForm = () => {
     EMPTY_ACTION_STATE,
   );
 
+  const { refetch } = useSession();
+
+  const handleSuccess = async () => {
+    await refetch();
+    redirect(ticketsPath());
+  };
+
   return (
-    <Form action={action} actionState={actionState}>
+    <Form action={action} actionState={actionState} onSuccess={handleSuccess}>
       <FieldGroup className="gap-y-2">
         <Field
           data-invalid={!!actionState.fieldErrors?.email?.length}
@@ -49,7 +59,7 @@ const SignInForm = () => {
         </Field>
       </FieldGroup>
 
-      <SubmitButton label="Sign In" pending={pending} />
+      <SubmitButton label="Sign In" />
     </Form>
   );
 };

@@ -113,7 +113,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
         </div>
       </FieldGroup>
 
-      <SubmitButton label={ticket ? "Edit" : "Create"} pending={pending} />
+      <SubmitButton label={ticket ? "Edit" : "Create"} />
     </Form>
   );
 };

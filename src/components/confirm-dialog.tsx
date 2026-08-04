@@ -55,9 +55,7 @@ const useConfirmDialog = ({
             actionState={actionState}
             onSuccess={handleSuccess}
           >
-            <AlertDialogAction
-              render={<SubmitButton label="Confirm" pending={pending} />}
-            />
+            <AlertDialogAction render={<SubmitButton label="Confirm" />} />
           </Form>
         </AlertDialogFooter>
       </AlertDialogContent>

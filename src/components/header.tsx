@@ -1,14 +1,19 @@
-import { signOut } from "@/features/auth/actions/sign-out";
+"use client";
+
+import { SignOutForm } from "@/features/auth/components/sign-out-form";
+import { useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { homePath, signInPath, signUpPath, ticketsPath } from "@/paths";
-import { LucideKanban, LucideLogOut } from "lucide-react";
+import { LucideKanban } from "lucide-react";
 import Link from "next/link";
-import { SubmitButton } from "./form/submit-button";
 import { ThemeSwitcher } from "./theme/theme-switcher";
 import { buttonVariants } from "./ui/button";
 
 const Header = () => {
-  const navItems = (
+  const { data: session, isPending } = useSession();
+  const isAuthenticated = !isPending && session?.user;
+
+  const navItems = isAuthenticated ? (
     <>
       <Link
         href={ticketsPath()}
@@ -16,6 +21,10 @@ const Header = () => {
       >
         Tickets
       </Link>
+      <SignOutForm />
+    </>
+  ) : (
+    <>
       <Link
         href={signUpPath()}
         className={cn(buttonVariants({ variant: "outline" }))}
@@ -24,17 +33,10 @@ const Header = () => {
       </Link>
       <Link
         href={signInPath()}
-        className={cn(buttonVariants({ variant: "outline" }))}
+        className={cn(buttonVariants({ variant: "default" }))}
       >
         Sign In
       </Link>
-      <form action={signOut}>
-        <SubmitButton
-          label="Sign Out"
-          icon={<LucideLogOut />}
-          pending={false}
-        />
-      </form>
     </>
   );
 

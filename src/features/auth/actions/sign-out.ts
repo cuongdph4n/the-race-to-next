@@ -1,9 +1,8 @@
 "use server";
 
+import { toActionState } from "@/components/form/utils/to-action-state";
 import { auth } from "@/lib/auth";
-import { signInPath } from "@/paths";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 export const signOut = async () => {
   await auth.api.signOut({
@@ -11,5 +10,5 @@ export const signOut = async () => {
     headers: await headers(),
   });
 
-  redirect(signInPath());
+  return toActionState("SUCCESS", "Signed out successfully");
 };
