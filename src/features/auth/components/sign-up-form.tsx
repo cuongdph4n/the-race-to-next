@@ -8,7 +8,7 @@ import { EMPTY_ACTION_STATE } from "@/components/form/utils/to-action-state";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { useSession } from "@/lib/auth-client";
 import { ticketsPath } from "@/paths";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useActionState } from "react";
 import { signUp } from "../actions/sign-up";
 
@@ -19,10 +19,11 @@ const SignUpForm = () => {
   );
 
   const { refetch } = useSession();
+  const router = useRouter();
 
   const handleSuccess = async () => {
     await refetch();
-    redirect(ticketsPath());
+    router.replace(ticketsPath());
   };
 
   return (

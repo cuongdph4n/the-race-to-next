@@ -27,3 +27,9 @@ export const consumeCookieByKey = async (key: string) => {
 
   return message;
 };
+
+export const hasCookieByKey = async (key: string) => {
+  const hasCookie = (await cookies()).has(key);
+
+  return hasCookie;
+};

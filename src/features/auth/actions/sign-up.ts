@@ -1,5 +1,6 @@
 "use server";
 
+import { setCookieByKey } from "@/actions/cookies";
 import {
   ActionState,
   fromErrorToActionState,
@@ -46,5 +47,7 @@ export const signUp = async (_actionState: ActionState, formData: FormData) => {
     return fromErrorToActionState(error, formData);
   }
 
-  return toActionState("SUCCESS", "Signed up successfully");
+  await setCookieByKey("toast", "Account created");
+
+  return toActionState("SUCCESS");
 };

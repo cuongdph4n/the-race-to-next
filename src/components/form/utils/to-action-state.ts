@@ -52,11 +52,11 @@ export const fromErrorToActionState = (
 
 export const toActionState = (
   status: ActionState["status"],
-  message: string,
+  message?: string,
 ): ActionState => {
   return {
     status,
-    message,
+    message: message ?? "",
     fieldErrors: {},
     timestamp: Date.now(),
   };

@@ -32,10 +32,7 @@ const useConfirmDialog = ({
     onClick: () => setIsOpen((state) => !state),
   });
 
-  const [actionState, formAction, pending] = useActionState(
-    action,
-    EMPTY_ACTION_STATE,
-  );
+  const [actionState, formAction] = useActionState(action, EMPTY_ACTION_STATE);
 
   const handleSuccess = () => {
     setIsOpen(false);

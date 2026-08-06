@@ -7,17 +7,18 @@ import { signOut } from "@/features/auth/actions/sign-out";
 import { useSession } from "@/lib/auth-client";
 import { signInPath } from "@/paths";
 import { LucideLogOut } from "lucide-react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useActionState } from "react";
 
 const SignOutForm = () => {
   const [actionState, action] = useActionState(signOut, EMPTY_ACTION_STATE);
 
   const { refetch } = useSession();
+  const router = useRouter();
 
   const handleSuccess = async () => {
     await refetch();
-    redirect(signInPath());
+    router.replace(signInPath());
   };
 
   return (
