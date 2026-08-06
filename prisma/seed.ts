@@ -1,4 +1,5 @@
 import { PrismaClient } from "@/generated/prisma/client";
+import { auth } from "@/lib/auth";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -6,6 +7,12 @@ const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
+
+const users = [
+  {
+    name: "Cuong",
+  },
+];
 
 const tickets = [
   {
@@ -36,9 +43,22 @@ const seed = async () => {
   console.log("DB Seed: Started ...");
 
   await prisma.ticket.deleteMany();
+  await prisma.user.deleteMany();
+
+  const creationPromises = users.map((user) =>
+    auth.api.signUpEmail({
+      body: {
+        email: process.env.SEED_EMAIL!,
+        password: process.env.SEED_PASSWORD!,
+        name: user.name,
+      },
+    }),
+  );
+
+  const dbUser = await Promise.all(creationPromises);
 
   await prisma.ticket.createMany({
-    data: tickets,
+    data: tickets.map((ticket) => ({ ...ticket, userId: dbUser[0].user.id })),
   });
 
   const t1 = performance.now();
