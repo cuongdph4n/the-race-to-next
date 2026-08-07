@@ -36,7 +36,7 @@ const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
   const handleUpdateTicketStatus = async (value: string) => {
     const actionPromise = new Promise(async (resolve, reject) => {
       const res = await updateTicketStatus(ticket.id, value as TicketStatus);
-      console.log({ res });
+
       if (res.status === "ERROR") {
         reject(res.message);
       } else {

@@ -6,7 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { isOwner } from "@/features/auth/utils/is-owner";
 import { Prisma } from "@/generated/prisma/client";
+import { auth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
@@ -15,6 +17,7 @@ import {
   LucideMoreVertical,
   LucidePencil,
 } from "lucide-react";
+import { headers } from "next/headers";
 import Link from "next/link";
 import { TICKET_ICONS } from "../constants";
 import { TicketMoreMenu } from "./ticket-more-menu";
@@ -26,7 +29,13 @@ type TicketItemProps = {
   isDetail?: boolean;
 };
 
-const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
+const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
+  const { user } =
+    (await auth.api.getSession({
+      headers: await headers(),
+    })) ?? {};
+  const isTicketOwner = isOwner(user, ticket);
+
   const detailButton = (
     <Link
       prefetch
@@ -37,7 +46,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     </Link>
   );
 
-  const editButton = (
+  const editButton = isTicketOwner ? (
     <Link
       prefetch
       href={ticketEditPath(ticket.id)}
@@ -45,9 +54,9 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     >
       <LucidePencil className="h-4 w-4" />
     </Link>
-  );
+  ) : null;
 
-  const moreMenu = (
+  const moreMenu = isTicketOwner ? (
     <TicketMoreMenu
       ticket={ticket}
       trigger={
@@ -58,7 +67,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         </button>
       }
     />
-  );
+  ) : null;
 
   return (
     <div

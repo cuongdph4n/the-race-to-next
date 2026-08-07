@@ -14,13 +14,14 @@ type TicketEditPageProps = {
 
 const TicketEditPage = async ({ params }: TicketEditPageProps) => {
   const { ticketId } = await params;
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const { user } =
+    (await auth.api.getSession({
+      headers: await headers(),
+    })) ?? {};
   const ticket = await getTicket(ticketId);
 
   const isTicketFound = !!ticket;
-  const isTicketOwner = isOwner(session?.user, ticket);
+  const isTicketOwner = isOwner(user, ticket);
 
   if (!isTicketFound || !isTicketOwner) {
     notFound();
