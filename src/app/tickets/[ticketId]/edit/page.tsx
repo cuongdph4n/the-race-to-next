@@ -1,6 +1,9 @@
 import { CardCompact } from "@/components/card-compact";
+import { isOwner } from "@/features/auth/utils/is-owner";
 import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
 import { getTicket } from "@/features/ticket/queries/get-ticket";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 
 type TicketEditPageProps = {
@@ -11,9 +14,15 @@ type TicketEditPageProps = {
 
 const TicketEditPage = async ({ params }: TicketEditPageProps) => {
   const { ticketId } = await params;
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   const ticket = await getTicket(ticketId);
 
-  if (!ticket) {
+  const isTicketFound = !!ticket;
+  const isTicketOwner = isOwner(session?.user, ticket);
+
+  if (!isTicketFound || !isTicketOwner) {
     notFound();
   }
 

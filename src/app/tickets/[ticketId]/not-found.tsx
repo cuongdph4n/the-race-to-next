@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <Placeholder
-      label="Ticket not found"
+      label="We could not find your ticket"
       button={
         <Link
           href={ticketsPath()}
