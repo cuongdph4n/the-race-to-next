@@ -34,12 +34,20 @@ const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
   });
 
   const handleUpdateTicketStatus = async (value: string) => {
-    const promise = updateTicketStatus(ticket.id, value as TicketStatus);
+    const actionPromise = new Promise(async (resolve, reject) => {
+      const res = await updateTicketStatus(ticket.id, value as TicketStatus);
+      console.log({ res });
+      if (res.status === "ERROR") {
+        reject(res.message);
+      } else {
+        resolve(res.message);
+      }
+    });
 
-    toast.promise(promise, {
+    toast.promise(actionPromise, {
       loading: "Updating status...",
-      success: (result) => `${result.message}`,
-      error: (result) => `${result.message}`,
+      success: (msg) => `${msg}`,
+      error: (err) => `${err}`,
     });
   };
 
